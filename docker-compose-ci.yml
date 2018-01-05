@@ -29,7 +29,7 @@ services:
       - users-db
     links:
       - users-db
-    command: gunicorn -b 0.0.0.0:5000 manage:app
+    command: gunicorn -b 0.0.0.0:5000 ezasdf_users:app
 
   web-service:
     container_name: web-service
