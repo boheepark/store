@@ -99,3 +99,13 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# jetbrains
+.idea/
+
+# setup
+setup.cmd
+setup.bat
+
+# node
+node_modules/
