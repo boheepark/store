@@ -5,7 +5,7 @@ services:
   users-db:
     container_name: users-db
     build:
-      context: https://github.com/boheepark/store.git#master:services/users/project/db
+      context: ./services/users/project/db
     ports:
       - 5435:5432  # expose ports - HOST:CONTAINER
     environment:
