@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.4'
 
 services:
 
@@ -48,7 +48,7 @@ services:
   swagger:
     container_name: swagger
     build:
-      context: ./services/swagger
+      context: https://github.com/boheepark/ezasdf-swagger.git
     ports:
       - '8080:8080' # expose ports - HOST:CONTAINER
     environment:
