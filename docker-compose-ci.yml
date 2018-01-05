@@ -15,7 +15,7 @@ services:
   users-service:
     container_name: users-service
     build:
-      context: https://github.com/boheepark/ezasdf-users.git
+      context: ./services/users
       dockerfile: Dockerfile
     expose:
       - '5000'
@@ -24,12 +24,12 @@ services:
       - DATABASE_URL=postgres://postgres:postgres@users-db:5432/users_staging
       - DATABASE_TEST_URL=postgres://postgres:postgres@users-db:5432/users_test
       - SECRET_KEY=${SECRET_KEY}
-      - FLASK_APP=ezasdf_users.py
+      - FLASK_APP=users.py
     depends_on:
       - users-db
     links:
       - users-db
-    command: gunicorn -b 0.0.0.0:5000 ezasdf_users:app
+    command: gunicorn -b 0.0.0.0:5000 users:app
 
   web-service:
     container_name: web-service
