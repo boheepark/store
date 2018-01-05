@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserList renders a snapshot properly 1`] = `
+<div>
+  <h1>
+    All Users
+  </h1>
+  <hr />
+  <br />
+  <table
+    className="table table-striped table-bordered table-condensed table-hover"
+  >
+    <thead>
+      <tr>
+        <th>
+          User ID
+        </th>
+        <th>
+          Username
+        </th>
+        <th>
+          Email
+        </th>
+        <th>
+          Active
+        </th>
+        <th>
+          Admin
+        </th>
+        <th>
+          Created Date
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          1
+        </td>
+        <td>
+          test
+        </td>
+        <td>
+          test@email.com
+        </td>
+        <td>
+          true
+        </td>
+        <td>
+          false
+        </td>
+        <td>
+          Wed, 21 Dec 2016 23:36:07 GMT
+        </td>
+      </tr>
+      <tr>
+        <td>
+          2
+        </td>
+        <td>
+          test2
+        </td>
+        <td>
+          test2@email.com
+        </td>
+        <td>
+          true
+        </td>
+        <td>
+          false
+        </td>
+        <td>
+          Wed, 21 Dec 2016 23:36:07 GMT
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
