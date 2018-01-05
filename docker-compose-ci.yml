@@ -65,7 +65,7 @@ services:
       - 80:80
     depends_on:
       - users-service
-      - web-service
+      - client
     links:
       - users-service
-      - web-service
+      - client
