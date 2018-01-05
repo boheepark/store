@@ -15,8 +15,8 @@ services:
   users-service:
     container_name: users-service
     build:
-      context: https://github.com/boheepark/store.git#master:services/users
-      dockerfile: Dockerfile-stage
+      context: https://github.com/boheepark/ezasdf-users.git
+      dockerfile: Dockerfile
     expose:
       - '5000'
     environment:
