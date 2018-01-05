@@ -51,7 +51,7 @@ services:
     build:
       context: https://github.com/boheepark/ezasdf-swagger.git
     ports:
-      - '8080:8080' # expose ports - HOST:CONTAINER
+      - '3008:8080' # expose ports - HOST:CONTAINER
     environment:
       - API_URL=swagger.json
     depends_on:
