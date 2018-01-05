@@ -5,7 +5,7 @@ services:
   users-db:
     container_name: users-db
     build:
-      context: https://github.com/boheepark/ezasdf-users.git#master:project/db
+      context: https://github.com/boheepark/store.git#master:services/users/project/db
     ports:
       - 5435:5432  # expose ports - HOST:CONTAINER
     environment:
@@ -15,7 +15,7 @@ services:
   users-service:
     container_name: users-service
     build:
-      context: ./services/users
+      context: https://github.com/boheepark/store.git#master:services/users
       dockerfile: Dockerfile-stage
     expose:
       - '5000'
