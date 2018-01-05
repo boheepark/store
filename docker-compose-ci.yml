@@ -49,7 +49,7 @@ services:
   swagger:
     container_name: swagger
     build:
-      context: https://github.com/boheepark/ezasdf-swagger.git
+      context: ./services/swagger
     ports:
       - '3008:8080' # expose ports - HOST:CONTAINER
     environment:
