@@ -1,0 +1,80 @@
+language: node_js
+node_js: '8'
+
+
+before_install:
+  - stty cols 80
+
+
+dist: trusty
+sudo: required
+
+
+addons:
+  firefox: latest
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable fluxbox
+
+
+services:
+  - docker
+
+
+cache:
+  directories:
+    # TODO check if node_modules is cached
+    - node_modules
+
+
+env:
+  global:
+    - DOCKER_COMPOSE_VERSION=1.17.1
+    - COMMIT=${TRAVIS_COMMIT::8}
+    - USERS=ezasdf-users
+    - USERS_REPO=https://github.com/boheepark/$USERS.git
+    - USERS_DB=ezasdf-users_db
+    - USERS_DB_REPO=https://github.com/boheepark/$USERS.git#master:project/db
+    - CLIENT=ezasdf-client
+    - CLIENT_REPO=https://github.com/boheepark/$CLIENT.git
+    - SWAGGER=ezasdf-swagger
+    - SWAGGER_REPO=https://github.com/boheepark/$SWAGGER.git
+    - NGINX=ezasdf-nginx
+    - NGINX_REPO=https://github.com/boheepark/ezasdf-main.git#master:nginx
+
+
+before_install:
+  # docker-compose
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+
+
+before_script:
+  - export TEST_URL=http://127.0.0.1
+  - export REACT_APP_USERS_SERVICE_URL=http://127.0.0.1
+  - export SECRET_KEY=secret
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - sleep 3
+  - fluxbox >/dev/null 2>&1 &
+  - bash ./docker_build.sh
+
+
+script:
+  - docker-compose -f docker-compose-ci.yml run users-service flask recreate_db
+  - docker-compose -f docker-compose-ci.yml run users-service flask seed_db
+  - docker-compose -f docker-compose-ci.yml run users-service flask test --cov
+  - testcafe chrome e2e
+
+
+after_success:
+  - bash ./docker_push.sh
+  - bash ./docker_deploy.sh
+
+
+after_script:
+  - docker-compose -f docker-compose-dev.yml down

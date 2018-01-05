@@ -1,0 +1,12 @@
+{
+  "name": "store",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/boheepark/store.git",
+  "author": "Bohee Park <boheepark91@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "randomstring": "^1.1.5",
+    "testcafe": "^0.18.6"
+  }
+}
