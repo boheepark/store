@@ -15,7 +15,8 @@ services:
   users-service:
     container_name: users-service
     build:
-      context: https://github.com/boheepark/ezasdf-users.git
+      context: ./services/users
+      dockerfile: Dockerfile-stage
     expose:
       - '5000'
     environment:
@@ -57,7 +58,7 @@ services:
 
   nginx:
     container_name: nginx
-    build: ./services/nginx/
+    build: ./services/nginx
     restart: always
     ports:
       - 80:80
