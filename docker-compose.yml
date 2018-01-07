@@ -16,7 +16,6 @@ services:
     container_name: users-service
     build:
       context: ./services/users
-      dockerfile: Dockerfile-local
     volumes:
       - './services/users:/usr/src/app'
     ports:
@@ -36,7 +35,6 @@ services:
     container_name: client
     build:
       context: ./services/client
-      dockerfile: Dockerfile-local
     volumes:
       - './services/client:/usr/src/app'
       - '/usr/src/app/node_modules'
