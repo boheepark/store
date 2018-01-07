@@ -1,7 +1,7 @@
 # store
 
 
-[![Build Status](https://travis-ci.org/boheepark/ezasdf-main.svg?branch=master)](https://travis-ci.org/boheepark/ezasdf-main)
+[![Build Status](https://travis-ci.org/boheepark/store.svg?branch=master)](https://travis-ci.org/boheepark/store)
 
 
 <a href="https://github.com/DevExpress/testcafe">
