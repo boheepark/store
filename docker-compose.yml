@@ -55,7 +55,7 @@ services:
     ports:
       - '3008:8080' # expose ports - HOST:CONTAINER
     environment:
-      - API_URL=https://raw.githubusercontent.com/boheepark/ezasdf-swagger/master/swagger.json
+      - API_URL=swagger.json
     depends_on:
       - users-service
 
