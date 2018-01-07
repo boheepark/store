@@ -12,4 +12,4 @@ then
     docker pull $DOCKER_ID/$NGINX:$TAG
 fi
 
-docker-compose -f docker-compose-ci.yml up -d --build
+docker-compose -f docker-compose-stage.yml up -d --build
