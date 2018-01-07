@@ -63,7 +63,7 @@ services:
 
   nginx:
     container_name: nginx
-    build: ./nginx
+    build: ./services/nginx
     restart: always
     ports:
       - 80:80
