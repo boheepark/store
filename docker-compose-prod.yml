@@ -50,6 +50,7 @@ services:
     container_name: swagger
     build:
       context: ./services/swagger
+      dockerfile: Dockerfile-prod
     ports:
       - '3008:8080' # expose ports - HOST:CONTAINER
     environment:
