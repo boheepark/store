@@ -7,7 +7,7 @@ services:
     build:
       context: ./services/users/project/db
     ports:
-      - 5435:5432 # expose ports - HOST:CONTAINER
+      - 5435:5432  # expose ports - HOST:CONTAINER
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -16,35 +16,31 @@ services:
     container_name: users-service
     build:
       context: ./services/users
-      dockerfile: Dockerfile-local
-    volumes:
-      - './services/users:/usr/src/app'
-    ports:
-      - 5001:5000 # expose ports - HOST:CONTAINER
+      dockerfile: Dockerfile-stage
+    expose:
+      - '5000'
     environment:
-      - APP_SETTINGS=project.config.DevelopmentConfig
-      - DATABASE_URL=postgres://postgres:postgres@users-db:5432/users_dev
+      - APP_SETTINGS=project.config.StagingConfig
+      - DATABASE_URL=postgres://postgres:postgres@users-db:5432/users_staging
       - DATABASE_TEST_URL=postgres://postgres:postgres@users-db:5432/users_test
-      - FLASK_APP=users.py
       - SECRET_KEY=${SECRET_KEY}
+      - FLASK_APP=users.py
     depends_on:
       - users-db
     links:
       - users-db
+    command: gunicorn -b 0.0.0.0:5000 users:app
 
   client:
     container_name: client
     build:
       context: ./services/client
-      dockerfile: Dockerfile-local
-    volumes:
-      - './services/client:/usr/src/app'
-      - '/usr/src/app/node_modules'
+      dockerfile: Dockerfile-stage
+      args:
+        - NODE_ENV=development
+        - REACT_APP_USERS_SERVICE_URL=${REACT_APP_USERS_SERVICE_URL}
     ports:
       - '3007:3000' # expose ports - HOST:CONTAINER
-    environment:
-      - NODE_ENV=development
-      - REACT_APP_USERS_SERVICE_URL=${REACT_APP_USERS_SERVICE_URL}
     depends_on:
       - users-service
     links:
@@ -55,15 +51,15 @@ services:
     build:
       context: ./services/swagger
     ports:
-      - '8080:8080' # expose ports - HOST:CONTAINER
+      - '3008:8080' # expose ports - HOST:CONTAINER
     environment:
-      - API_URL=https://raw.githubusercontent.com/boheepark/ezasdf-swagger/master/swagger.json
+      - API_URL=swagger.json
     depends_on:
       - users-service
 
   nginx:
     container_name: nginx
-    build: ./nginx
+    build: ./services/nginx
     restart: always
     ports:
       - 80:80
