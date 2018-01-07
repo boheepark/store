@@ -43,6 +43,10 @@ env:
     - SWAGGER_REPO=https://github.com/boheepark/$SWAGGER.git
     - NGINX=ezasdf-nginx
     - NGINX_REPO=https://github.com/boheepark/ezasdf-main.git#master:nginx
+    - TEST_URL=http://127.0.0.1
+    - REACT_APP_USERS_SERVICE_URL=http://127.0.0.1
+    - SECRET_KEY=secret
+    - DISPLAY=:99.0
 
 
 before_install:
@@ -54,10 +58,6 @@ before_install:
 
 
 before_script:
-  - export TEST_URL=http://127.0.0.1
-  - export REACT_APP_USERS_SERVICE_URL=http://127.0.0.1
-  - export SECRET_KEY=secret
-  - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
   - sleep 3
   - fluxbox >/dev/null 2>&1 &
