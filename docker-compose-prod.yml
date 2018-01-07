@@ -53,7 +53,7 @@ services:
     ports:
       - '3008:8080' # expose ports - HOST:CONTAINER
     environment:
-      - API_URL=swagger.json
+      - URL=swagger.json
     depends_on:
       - users-service
 
