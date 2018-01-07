@@ -1,0 +1,71 @@
+version: '3.4'
+
+services:
+
+  users-db:
+    container_name: users-db
+    build:
+      context: ./services/users/project/db
+    ports:
+      - 5435:5432  # expose ports - HOST:CONTAINER
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  users-service:
+    container_name: users-service
+    build:
+      context: ./services/users
+      dockerfile: Dockerfile-stage
+    expose:
+      - '5000'
+    environment:
+      - APP_SETTINGS=project.config.StagingConfig
+      - DATABASE_URL=postgres://postgres:postgres@users-db:5432/users_staging
+      - DATABASE_TEST_URL=postgres://postgres:postgres@users-db:5432/users_test
+      - SECRET_KEY=${SECRET_KEY}
+      - FLASK_APP=users.py
+    depends_on:
+      - users-db
+    links:
+      - users-db
+    command: gunicorn -b 0.0.0.0:5000 users:app
+
+  client:
+    container_name: client
+    build:
+      context: ./services/client
+      dockerfile: Dockerfile-stage
+      args:
+        - NODE_ENV=development
+        - REACT_APP_USERS_SERVICE_URL=${REACT_APP_USERS_SERVICE_URL}
+    ports:
+      - '3007:3000' # expose ports - HOST:CONTAINER
+    depends_on:
+      - users-service
+    links:
+      - users-service
+
+  swagger:
+    container_name: swagger
+    build:
+      context: ./services/swagger
+    ports:
+      - '3008:8080' # expose ports - HOST:CONTAINER
+    environment:
+      - API_URL=swagger.json
+    depends_on:
+      - users-service
+
+  nginx:
+    container_name: nginx
+    build: ./services/nginx
+    restart: always
+    ports:
+      - 80:80
+    depends_on:
+      - users-service
+      - client
+    links:
+      - users-service
+      - client
