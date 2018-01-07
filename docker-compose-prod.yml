@@ -20,8 +20,8 @@ services:
     expose:
       - '5000'
     environment:
-      - APP_SETTINGS=project.config.StagingConfig
-      - DATABASE_URL=postgres://postgres:postgres@users-db:5432/users_staging
+      - APP_SETTINGS=project.config.ProductionConfig
+      - DATABASE_URL=postgres://postgres:postgres@users-db:5432/users_prod
       - DATABASE_TEST_URL=postgres://postgres:postgres@users-db:5432/users_test
       - SECRET_KEY=${SECRET_KEY}
       - FLASK_APP=users.py
