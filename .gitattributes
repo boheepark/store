@@ -2,7 +2,7 @@
 * text=auto
 
 # Force the following filetypes to have unix eols, so Windows does not break them
-*.* text eol=lf
+*.sh text eol=lf
 
 # Explicitly declare text files you want to always be normalized and converted
 # to native line endings on checkout.
