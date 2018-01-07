@@ -4,15 +4,15 @@
 if [ -z "$TRAVIS_PULL_REQUEST" ] || [ "$TRAVIS_PULL_REQUEST" == "false" ];
 then
 
-    if [ "$TRAVIS_BRANCH" == "development" ];
+    if [ "$TRAVIS_BRANCH" == "dev" ];
     then
         docker login -u $DOCKER_ID -p $DOCKER_PASSWORD
         export TAG=$TRAVIS_BRANCH
         export REPO=$DOCKER_ID
     fi
 
-    if [ "$TRAVIS_BRANCH" == "staging" ] || \
-       [ "$TRAVIS_BRANCH" == "production" ];
+    if [ "$TRAVIS_BRANCH" == "stage" ] || \
+       [ "$TRAVIS_BRANCH" == "prod" ];
     then
         curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
         unzip awscli-bundle.zip
@@ -24,21 +24,21 @@ then
         export REPO=$AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com
     fi
 
-    if [ "$TRAVIS_BRANCH" == "staging" ];
+    if [ "$TRAVIS_BRANCH" == "stage" ];
     then
         export REACT_APP_USERS_SERVICE_URL="TBD"
         export SECRET_KEY="secret"
     fi
 
-    if [ "$TRAVIS_BRANCH" == "production" ];
+    if [ "$TRAVIS_BRANCH" == "prod" ];
     then
         export REACT_APP_USERS_SERVICE_URL="TBD"
         export SECRET_KEY="TBD"
     fi
 
-    if [ "$TRAVIS_BRANCH" == "development" ] || \
-       [ "$TRAVIS_BRANCH" == "staging" ] || \
-       [ "$TRAVIS_BRANCH" == "production" ];
+    if [ "$TRAVIS_BRANCH" == "dev" ] || \
+       [ "$TRAVIS_BRANCH" == "stage" ] || \
+       [ "$TRAVIS_BRANCH" == "prod" ];
     then
         # users
         docker build $USERS_REPO -t $USERS:$COMMIT
