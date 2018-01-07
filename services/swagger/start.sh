@@ -7,4 +7,4 @@ then
 fi
 
 
-exec nginx -g 'daemon off;'
+nginx -g 'daemon off;'
